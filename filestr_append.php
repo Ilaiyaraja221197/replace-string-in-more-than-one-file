@@ -1,10 +1,11 @@
 <?php
 ini_set("display_errors",1);
+
 /*Multiple file str change */
-    $path = $_SERVER['DOCUMENT_ROOT']."/tests/replace/"; // Path to your textfiles 
+function multipleFileStrReplace($path,$string_to_replace,$replace_with){
+    
     $fileList = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
-    $string_to_replace="https://omni.mconnectapps.com/aa/ms-sso/";
-        $replace_with="https://omni.mconnectapps.com/bb/ms-sso/";
+    
     foreach ($fileList as $item) {
         if ($item->isFile() && stripos($item->getPathName(), 'txt') !== false) {
             $file_contents = file_get_contents($item->getPathName());
@@ -12,46 +13,24 @@ ini_set("display_errors",1);
             file_put_contents($item->getPathName(),$file_contents);
         }
     }
+}
+$path = $_SERVER['DOCUMENT_ROOT']."/tests/replace/"; // Path to your textfiles 
+$string_to_replace="text you want to change";
+$replace_with="text you want to replace";
+multipleFileStrReplace($path,$string_to_replace,$replace_with);
+
 
 
 /* Single file sting change */
-    // function replace_string_in_file($filename, $string_to_replace, $replace_with){
-    //     $content=file_get_contents($filename);
-    //     $content_chunks=explode($string_to_replace, $content);
-    //     $content=implode($replace_with, $content_chunks);
-    //     file_put_contents($filename, $content);
-    // }
+    function replace_string_in_file($filename, $string_to_replace, $replace_with){
+        $content=file_get_contents($filename);
+        $content_chunks=explode($string_to_replace, $content);
+        $content=implode($replace_with, $content_chunks);
+        file_put_contents($filename, $content);
+    }
 
-    //$filename="ve.txt";
-    //    $string_to_replace="https://omni.mconnectapps.com/ms-sso/";
-    //    $replace_with="https://omni.mconnectapps.com/aa/ms-sso/";
-       // replace_string_in_file($filename, $string_to_replace, $replace_with);
+       $filename="ve.txt";
+        $string_to_replace="text you want to change";
+        $replace_with="text you want to replace";
+       replace_string_in_file($filename, $string_to_replace, $replace_with);
     
-
-// function recurse_strfile($src,$string_to_replace,$replace_with){
-//     $dir = opendir($src);
-//     while (false !== ($file = readdir($dir))) {
-//         if (($file != '.') && ($file != '..')) {
-//             if (is_dir($src . '/' . $file)) {   
-//                 recurse_strfile($src . '/' . $file,$string_to_replace,$replace_with);
-               
-//             } else {
-                
-//                 $content=file_get_contents($file);
-//                 $content_chunks=explode($string_to_replace, $content);
-//                 $content=implode($replace_with, $content_chunks);
-//                 file_put_contents($file, $content);
-//             }
-//         }      
-//     }
-// }
-
-   
-
-//    $src = $_SERVER['DOCUMENT_ROOT']."/tests/replace/"; // Path to your textfiles 
-//    $string_to_replace="https://omni.mconnectapps.com/ms-sso/";
-//    $replace_with="https://omni.mconnectapps.com/aa/ms-sso/";
-//    recurse_strfile($src,$string_to_replace,$replace_with);
-//     $fileList = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
-//    // print_r($fileList);
-// // exit;
