@@ -7,7 +7,13 @@ function multipleFileStrReplace($path,$string_to_replace,$replace_with){
     $fileList = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
     
     foreach ($fileList as $item) {
-        if ($item->isFile() && stripos($item->getPathName(), 'txt') !== false) {
+        /*
+        for txt file is following if condition =>   if ($item->isFile() && stripos($item->getPathName(), 'txt') !== false) 
+        for other extension file then =>  if ($item->isFile() && stripos($item->getPathName(), 'other extention') !== false) 
+        for all files search then just =>  if ($item->isFile()) 
+        */
+        if ($item->isFile() && stripos($item->getPathName(), 'txt') !== false) 
+        {
             $file_contents = file_get_contents($item->getPathName());
             $file_contents = str_replace($string_to_replace,$replace_with,$file_contents);
             file_put_contents($item->getPathName(),$file_contents);
